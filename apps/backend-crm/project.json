@@ -1,0 +1,67 @@
+{
+  "name": "backend-crm",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/backend-crm/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/backend-crm",
+        "main": "apps/backend-crm/src/main.ts",
+        "tsConfig": "apps/backend-crm/tsconfig.app.json",
+        "assets": [
+          "apps/backend-crm/src/assets"
+        ],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/backend-crm/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "backend-crm:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "backend-crm:build:development"
+        },
+        "production": {
+          "buildTarget": "backend-crm:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/backend-crm/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/backend-crm/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
